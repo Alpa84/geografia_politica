@@ -1,0 +1,95 @@
+
+%h1 Geografía Política 
+%a{ 'data-background-color' => "#990000"}lelele
+.row
+  .span4 
+    %h3
+      = "Cargo elegido: #{@cargo_seleccionado_name}"
+  .span4 
+    %h3
+      = "Partido elegido: #{@partido_seleccionado_name}"
+.row
+  .span9
+    %div#mapa_part
+      = render 'map'
+  .span2
+    %h3 Ganadores de cada escuela
+    %p Las agrupaciones políticas que tuvieron más votos en cada local electoral
+    = button_to 'mostrar ganadores por escuela', { action: 'index' } , { class:"btn btn-info", type:'button'}
+    %h3 Explorar Resultados
+    %p elegir el cargo y el partido político
+    %form.form-inline
+      = label_tag :partido
+      = select 'partido', '2',  PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {:selected => 'lalala'}
+      = label_tag :cargo
+      = select 'cargo', '4',  PublicOffice.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {selected: 'whatever'}
+      %br
+      = button_tag 'Mostrar', {id:'update_map', class:'btn btn-primary', type:'submit'}
+
+.row
+  %h2#type-blockquotes Algunas miradas
+  %br
+  .span7
+    = map(:container_id => "map2",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
+    :circles =>  @pro_circles)
+  .span3
+  %h3 Huyamos.. hacia la derecha
+  %p la derecha parece ganar fuerza en los barrios y en las zonas suburbanas
+%br
+.row  
+  .span3
+    %h3 El centro es del Socialismo
+    %p la derecha parece ganar en los barrios, y en las zonas suburbanas
+  .span7
+    = map(:container_id => "map3",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
+    :circles =>  @socialismo_circles)
+%br
+.row  
+  .span3
+    %h3 Kirchnerismo de barrio
+    %p la derecha parece ganar en los barrios, y en las zonas suburbanas
+  .span7
+    = map(:container_id => "mapk",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
+    :circles =>  @k_circles)
+%br
+.row
+  .span4
+    %h4 Votos para Mónica Fein
+    = map(:container_id => "map4",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
+    :circles =>  @miguel_circles)
+  .span4
+    %h4 Votos para Lifchitz
+    = map(:container_id => "map5",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
+    :circles =>  @fein_circles)
+  .span3
+    %h3 Lifchitz es tenido en cuenta por toda la ciudad
+    %p el ex intendente tiene mejores resultados en toda la ciudad, comparado con otros candidatos
+%br
+.row  
+  .span3
+    %h3 Un caso raro..
+    %p el candidato a gobernador del PRO obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela
+  .span7
+    = map(:container_id => "map6",:center => {:latlng => [-32.980012,-60.657849],:zoom => 12 }, |
+    :circles => @intendente_pro_circles)
+%br
+%a.list-group-item-text
+  %h4.list-group-item-text Metodología
+  %p Se puede tener una noción aproximada de las preferencias electorales de los habitantes de cada zona de la ciudad al momento de las últimas elecciones observando los resultados electorales específicos de cada escuela (local electoral).
+  %br
+  %p Fundamentación:
+  Cada votante Rosarino es asignado por la Secretaría Electoral Nacional a una escuela cercana al domicilio en el que esta registrado en el padrón (ref). En algunos casos el padrón electoral puede no coincidir con el domicilio real de cada votante, por estar desactualizado o por otras razones, sin embargo creemos que en su mayor parte, los datos del domicilio registrados en el padrón electoral son representativos del domicilio real de los votantes.
+  %br
+  %p Metodología:
+  Se sumaron los resultados de las elecciones de 2011 de cada candidato de todas las mesas de cada local electoral. Fuente
+  Se relevó la ubicación geográfica de los 245 locales electorales (Fuente) por medios automatizados  y se revisó cada uno de estos resultados. 
+  %br
+  %p Visualización de los resultados:
+  Cada columna en el mapa está ubicada  de acuerdo al domicilio de cada local electoral en la ciudad. La altura de cada columna representa la proporción de votos que obtuvo cada candidato comparado con el total de votos efectuados en ese local electoral.
+  La altura corresponde a los valores relativos de los resultados y no a los absolutos, para evitar que los resultados por zona no varíen en función a la cantidad total de votos de cada escuela.
+  La referencia de los colores de las columnas va del verde claro para los resultados más bajos de cada candidato hasta el rojo intenso para sus resultados más altos.
+
+
+
+
+

@@ -1,30 +1,17 @@
 
 %h1 Geografía Política 
-%a{ 'data-background-color' => "#990000"}lelele
-.row
-  .span4 
-    %h3
-      = "Cargo elegido: #{@cargo_seleccionado_name}"
-  .span4 
-    %h3
-      = "Partido elegido: #{@partido_seleccionado_name}"
 .row
   .span9
     %div#mapa_part
       = render 'map'
   .span2
-    %h3 Ganadores de cada escuela
-    %p Las agrupaciones políticas que tuvieron más votos en cada local electoral
-    = button_to 'mostrar ganadores por escuela', { action: 'index' } , { class:"btn btn-info", type:'button'}
     %h3 Explorar Resultados
     %p elegir el cargo y el partido político
-    %form.form-inline
+    = form_tag({controller: "bienvenidos", action: "index"} , remote: true, method: "get", class: "form-group") do
       = label_tag :partido
-      = select 'partido', '2',  PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {:selected => 'lalala'}
-      = label_tag :cargo
-      = select 'cargo', '4',  PublicOffice.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {selected: 'whatever'}
-      %br
-      = button_tag 'Mostrar', {id:'update_map', class:'btn btn-primary', type:'submit'}
+      = select 'partido', 'political_party_id',  PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {:selected => 'lalala'}
+      = select 'cargo', 'public_office_id',  PublicOffice.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }
+      = submit_tag("Mostrar", {class:'btn btn-primary'})
 
 .row
   %h2#type-blockquotes Algunas miradas

@@ -1,7 +1,7 @@
 class BienvenidosController < ApplicationController
 
-LOW_COLOR  = 0x800000
-HIGH__COLOR = 0x7FFF00
+LOW_COLOR  = 0x000000 
+HIGH__COLOR = 0xFFFFFF
 SAMPLES = 100
 
   def index
@@ -92,5 +92,5 @@ def leaflet_circles (circles)
     intensity = 5000 if intensity > 5000
     {:latlng => [circles['lon'], circles['lat']],
    :radius => 200, :color =>"##{@gradient.gradient(intensity).to_s(16)}", :fillColor => "##{@gradient.gradient(intensity).to_s(16)}",
-   :fillOpacity => intensity/25 }
+   :fillOpacity =>  0.5 }
  end

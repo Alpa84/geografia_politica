@@ -1,10 +1,7 @@
 
 %h1 Geografía Política 
 .row
-  .span9
-    %div#mapa_part
-      = render 'map'
-  .span2
+  .span11
     %h3 Explorar Resultados
     %p elegir el cargo y el partido político
     = form_tag({controller: "bienvenidos", action: "index"} , remote: true, method: "get", class: "form-group") do
@@ -12,6 +9,10 @@
       = select 'partido', 'political_party_id',  PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {:selected => 'lalala'}
       = select 'cargo', 'public_office_id',  PublicOffice.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }
       = submit_tag("Mostrar", {class:'btn btn-primary'})
+.row
+  .span11
+    %div#mapa_part
+      = render 'map'
 
 .row
   %h2#type-blockquotes Algunas miradas

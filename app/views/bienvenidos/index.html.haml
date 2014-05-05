@@ -10,56 +10,80 @@
       = select 'cargo', 'public_office_id',  PublicOffice.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }
       = submit_tag("Mostrar", {class:'btn btn-primary'})
 .row
-  .span11
-    %div#mapa_part
-      = render 'map'
+  %div#mapa_part
+    = render 'map'
 
 .row
   %h2#type-blockquotes Algunas miradas
   %br
+  .span3
+    %h3 Huyamos.. hacia la derecha
+    %p la derecha parece ganar fuerza en los barrios y en las zonas suburbanas
   .span7
     = map(:container_id => "map2",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-    :circles =>  @pro_circles)
-  .span3
-  %h3 Huyamos.. hacia la derecha
-  %p la derecha parece ganar fuerza en los barrios y en las zonas suburbanas
+    :circles =>  @pro_circles[:leaflet])
+  .span1
+    - @legend_samples.times do |time|
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
+      = (@pro_circles[:labels][time] * 100 / 5).round.to_s+"%"
+
 %br
 .row  
   .span3
     %h3 El centro es del Socialismo
     %p la derecha parece ganar en los barrios, y en las zonas suburbanas
+  .span1
+    - @legend_samples.times do |time|
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
+      = (@socialismo_circles[:labels][time] * 100 / 5).round.to_s+"%" 
   .span7
     = map(:container_id => "map3",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-    :circles =>  @socialismo_circles)
+    :circles =>  @socialismo_circles[:leaflet])
 %br
 .row  
   .span3
     %h3 Kirchnerismo de barrio
     %p la derecha parece ganar en los barrios, y en las zonas suburbanas
+  .span1
+    - @legend_samples.times do |time|
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
+      = (@k_circles[:labels][time] * 100 / 5).round.to_s+"%"
   .span7
     = map(:container_id => "mapk",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-    :circles =>  @k_circles)
+    :circles =>  @k_circles[:leaflet])
 %br
 .row
-  .span4
-    %h4 Votos para Mónica Fein
-    = map(:container_id => "map4",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-    :circles =>  @miguel_circles)
-  .span4
-    %h4 Votos para Lifchitz
-    = map(:container_id => "map5",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-    :circles =>  @fein_circles)
-  .span3
+  .span2
     %h3 Lifchitz es tenido en cuenta por toda la ciudad
     %p el ex intendente tiene mejores resultados en toda la ciudad, comparado con otros candidatos
+  .span3
+    %h4 Votos para Mónica Fein
+    = map(:container_id => "map4",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
+    :circles =>  @fein_circles[:leaflet])
+  .span1
+    - @legend_samples.times do |time|
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
+      = (@fein_circles[:labels][time] * 100).round.to_s+"%"
+  .span3
+    %h4 Votos para Lifchitz
+    = map(:container_id => "map5",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
+    :circles =>  @miguel_circles[:leaflet])
+  .span1
+    - @legend_samples.times do |time|
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
+      = (@miguel_circles[:labels][time] * 100).round.to_s+"%"
 %br
 .row  
   .span3
     %h3 Un caso raro..
     %p el candidato a gobernador del PRO obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela
-  .span7
+  .span6
     = map(:container_id => "map6",:center => {:latlng => [-32.980012,-60.657849],:zoom => 12 }, |
-    :circles => @intendente_pro_circles)
+    :circles => @intendente_pro_circles[:leaflet])
+  .span1
+    - @legend_samples.times do |time|
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
+      = @intendente_pro_circles[:labels][time]
 %br
 %a.list-group-item-text
   %h4.list-group-item-text Metodología

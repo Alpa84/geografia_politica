@@ -1,7 +1,7 @@
 class BienvenidosController < ApplicationController
 
 LOW_COLOR  = 0x000000 
-HIGH__COLOR = 0xFFFFFF
+HIGH__COLOR = 0xFFFF00
 SAMPLES = 100
 LEGEND_SAMPLES = 5
   def index

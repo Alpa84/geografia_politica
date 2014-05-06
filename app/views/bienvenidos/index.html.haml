@@ -21,7 +21,7 @@
     %p la derecha parece ganar fuerza en los barrios y en las zonas suburbanas
   .span7
     = map(:container_id => "map2",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-    :circles =>  @pro_circles[:leaflet])
+    :circles =>  @pro_circles[:leaflet], :markers => [{ :latlng => [-32.954088, -60.664458], :popup => "el popup de prueben"}])
   .span1
     - @legend_samples.times do |time|
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●

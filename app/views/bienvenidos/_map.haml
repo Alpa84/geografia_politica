@@ -3,5 +3,6 @@
   :circles =>  @all_circles[:leaflet])
 .span1
   - @legend_samples.times do |time|
-    %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
     = (@all_circles[:labels][time] * 100).round.to_s+"%"
+    %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
+    

@@ -34,8 +34,8 @@
     %p la derecha parece ganar en los barrios, y en las zonas suburbanas
   .span1
     - @legend_samples.times do |time|
-      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
-      = (@socialismo_circles[:labels][time] * 100 / 5).round.to_s+"%" 
+      = (@socialismo_circles[:labels][time] * 100 / 5).round.to_s+"%"
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ● 
   .span7
     = map(:container_id => "map3",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
     :circles =>  @socialismo_circles[:leaflet])
@@ -46,8 +46,8 @@
     %p la derecha parece ganar en los barrios, y en las zonas suburbanas
   .span1
     - @legend_samples.times do |time|
-      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
       = (@k_circles[:labels][time] * 100 / 5).round.to_s+"%"
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
   .span7
     = map(:container_id => "mapk",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
     :circles =>  @k_circles[:leaflet])
@@ -62,16 +62,16 @@
     :circles =>  @fein_circles[:leaflet])
   .span1
     - @legend_samples.times do |time|
-      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
       = (@fein_circles[:labels][time] * 100).round.to_s+"%"
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
   .span3
     %h4 Votos para Lifchitz
     = map(:container_id => "map5",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
     :circles =>  @miguel_circles[:leaflet])
   .span1
     - @legend_samples.times do |time|
-      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
       = (@miguel_circles[:labels][time] * 100).round.to_s+"%"
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
 %br
 .row  
   .span3
@@ -82,8 +82,8 @@
     :circles => @intendente_pro_circles[:leaflet])
   .span1
     - @legend_samples.times do |time|
+      = (@intendente_pro_circles[:labels][time] * 100).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
-      = @intendente_pro_circles[:labels][time]
 %br
 %a.list-group-item-text
   %h4.list-group-item-text Metodología
@@ -100,6 +100,32 @@
   Cada columna en el mapa está ubicada  de acuerdo al domicilio de cada local electoral en la ciudad. La altura de cada columna representa la proporción de votos que obtuvo cada candidato comparado con el total de votos efectuados en ese local electoral.
   La altura corresponde a los valores relativos de los resultados y no a los absolutos, para evitar que los resultados por zona no varíen en función a la cantidad total de votos de cada escuela.
   La referencia de los colores de las columnas va del verde claro para los resultados más bajos de cada candidato hasta el rojo intenso para sus resultados más altos.
+.row
+  :script
+    var map = L.map('map2').setView([51.5, -0.09], 13);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var LeafIcon = L.Icon.extend({
+      options: {
+        shadowUrl: '../docs/images/leaf-shadow.png',
+        iconSize:     [38, 95],
+        shadowSize:   [50, 64],
+        iconAnchor:   [22, 94],
+        shadowAnchor: [4, 62],
+        popupAnchor:  [-3, -76]
+      }
+    });
+
+    var greenIcon = new LeafIcon({iconUrl: '../docs/images/leaf-green.png'}),
+      redIcon = new LeafIcon({iconUrl: '../docs/images/leaf-red.png'}),
+      orangeIcon = new LeafIcon({iconUrl: '../docs/images/leaf-orange.png'});
+
+    L.marker([51.5, -0.09], {icon: greenIcon}).bindPopup("I am a green leaf.").addTo(map);
+    L.marker([51.495, -0.083], {icon: redIcon}).bindPopup("I am a red leaf.").addTo(map);
+    L.marker([51.49, -0.1], {icon: orangeIcon}).bindPopup("I am an orange leaf.").addTo(map);
 
 
 

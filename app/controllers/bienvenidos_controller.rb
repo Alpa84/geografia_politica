@@ -57,7 +57,6 @@ end
 
  
 def circulos_partido(selected = {'partido_id' => 1})
-
   max = 0
   min = nil
   total = 0

@@ -5,6 +5,10 @@ HIGH__COLOR = 0xFFFF00
 SAMPLES = 100
 LEGEND_SAMPLES = 5
   def index
+
+    @constructed_java = alt_map(:container_id => "map",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },:custom_marker => 'algo', :markers => [{ :latlng => [-32.954088, -60.664458], :popup => "el popup de prueben"}])
+
+
     @color = "#0B6138"
     @legend_samples = LEGEND_SAMPLES
     if params['partido'].blank? || params['partido']['political_party_id'].blank?
@@ -111,3 +115,79 @@ def labels_a ( min_max)
   lab_arr
 end
 
+#-------------------------
+
+
+def alt_map(options)
+  options[:tile_layer] ||= Leaflet.tile_layer
+  options[:attribution] ||= Leaflet.attribution
+  options[:max_zoom] ||= Leaflet.max_zoom
+  options[:container_id] ||= 'map'
+
+  output = []
+  output << "<div id='#{options[:container_id]}'></div>" unless options[:no_container]
+  output << "<script>"
+  output << "var map = L.map('#{options[:container_id]}')"
+  
+  if options[:custom_marker]
+    output << "var greenIcon = L.icon({
+    iconUrl: 'leaf-green.png',
+    shadowUrl: 'leaf-shadow.png',
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });"
+
+  end
+
+  if options[:center]
+    output << "map.setView([#{options[:center][:latlng][0]}, #{options[:center][:latlng][1]}], #{options[:center][:zoom]})"
+  end
+
+
+  if options[:markers]
+    options[:markers].each do |marker|
+      output << "marker = L.marker([#{marker[:latlng][0]}, #{marker[:latlng][1]}]"
+      if options[:custom_marker]
+        output.last << ", {icon: greenIcon}" 
+      end
+      output.last << ").addTo(map)"
+      if marker[:popup]
+        output << "marker.bindPopup('#{marker[:popup]}')"
+      end
+    end
+  end
+
+  if options[:circles]
+    options[:circles].each do |circle|
+      output << "L.circle(['#{circle[:latlng][0]}', '#{circle[:latlng][1]}'], #{circle[:radius]}, {
+color: '#{circle[:color]}',
+fillColor: '#{circle[:fillColor]}',
+fillOpacity: #{circle[:fillOpacity]}
+}).addTo(map);"
+    end
+  end
+
+  if options[:polylines]
+     options[:polylines].each do |polyline|
+       _output = "L.polyline(#{polyline[:latlngs]}"
+       _output << "," + polyline[:options].to_json if polyline[:options]
+       _output << ").addTo(map);"
+       output << _output.gsub(/\n/,'')
+     end
+  end
+
+  if options[:fitbounds]
+    output << "map.fitBounds(L.latLngBounds(#{options[:fitbounds]}));"
+  end
+
+  output << "L.tileLayer('#{options[:tile_layer]}', {
+attribution: '#{options[:attribution]}',
+maxZoom: #{options[:max_zoom]}
+}).addTo(map)"
+  output << "</script>"
+  output.join("\n").html_safe
+end

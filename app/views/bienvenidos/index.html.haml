@@ -85,6 +85,9 @@
       = (@intendente_pro_circles[:labels][time] * 100).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
 %br
+
+!= @constructed_java
+
 %a.list-group-item-text
   %h4.list-group-item-text Metodología
   %p Se puede tener una noción aproximada de las preferencias electorales de los habitantes de cada zona de la ciudad al momento de las últimas elecciones observando los resultados electorales específicos de cada escuela (local electoral).

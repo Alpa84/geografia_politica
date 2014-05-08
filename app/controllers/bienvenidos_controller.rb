@@ -6,7 +6,7 @@ SAMPLES = 100
 LEGEND_SAMPLES = 5
   def index
 
-    @constructed_java = alt_map(:container_id => "map",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },:custom_marker => 'algo', :markers => [{ :latlng => [-32.954088, -60.664458], :popup => "el popup de prueben"}])
+
 
 
     @color = "#0B6138"
@@ -27,6 +27,16 @@ LEGEND_SAMPLES = 5
     end
  
     @gradient = Gradient.new( LOW_COLOR, HIGH__COLOR, SAMPLES)
+
+    @constructed_java = alt_map(:container_id => "map",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },:custom_marker => 'algo', 
+     :circles => [{:latlng => [-32.954088, -60.664458],
+     :radius => 200, :color =>"##{@gradient.gradient(2).to_s(16)}", :fillColor => "##{@gradient.gradient(3).to_s(16)}",
+     :fillOpacity =>  0.5 ,
+     :popup => 'lolo'
+     }]
+     )
+
+
     @all_circles = circulos_de_intensidad({'cargo_id' => @cargo_seleccionado.id, 'partido_id' => @partido_seleccionado.id})
     @fein_circles = circulos_de_intensidad({'cargo_id' => 5, 'partido_id' => 4})
     @miguel_circles = circulos_de_intensidad({'cargo_id' => 6, 'partido_id' => 4})
@@ -164,10 +174,14 @@ def alt_map(options)
   if options[:circles]
     options[:circles].each do |circle|
       output << "L.circle(['#{circle[:latlng][0]}', '#{circle[:latlng][1]}'], #{circle[:radius]}, {
-color: '#{circle[:color]}',
-fillColor: '#{circle[:fillColor]}',
-fillOpacity: #{circle[:fillOpacity]}
-}).addTo(map);"
+        color: '#{circle[:color]}',
+        fillColor: '#{circle[:fillColor]}',
+        fillOpacity: #{circle[:fillOpacity]}
+        }"
+      if circle[:popup]
+         output.last << ").bindPopup(String('el perro loco'))"
+      end
+      output.last << '.addTo(map);'
     end
   end
 

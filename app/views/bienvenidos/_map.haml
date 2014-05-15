@@ -1,6 +1,5 @@
 .span10
-  = map(:container_id => "map1", :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-  :circles =>  @all_circles[:leaflet])
+  = @all_circles_map
 .span1
   - @legend_samples.times do |time|
     = (@all_circles[:labels][time] * 100).round.to_s+"%"

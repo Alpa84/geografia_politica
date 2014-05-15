@@ -1,7 +1,7 @@
 
 schools = School.all
 
-school_indexes = *(2..243)
+school_indexes = *(2..244)
 
 school_indexes.each do |index|
   binding.pry
@@ -17,3 +17,4 @@ end
 
 p 'trabajo terminado, maestro'
 
+# poner en orden el ide de los cargos y ver si despues se corresponde con lo que se pide

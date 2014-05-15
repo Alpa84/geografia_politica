@@ -59,21 +59,15 @@ end
 
 def circulos_de_intensidad(selected = {'cargo_id' => 1, 'partido_id' => 1})
   votes_for_party = VotesTotal.where(political_party_id:selected['partido_id'])
-  leaflet = {}
-  max = 0
-  min = 0
-  total = 0
   leaflet_without_interpolation = School.all.collect do |school|
 
     votes = votes_for_party.where(public_office_id:selected['cargo_id']).where(school_id:school.id)[0].votes
     total = school.total
-    max = votes_for_party.where(public_office_id:selected['cargo_id']).maximum('votes')
-    min = votes_for_party.where(public_office_id:selected['cargo_id']).minimum('votes')
     lat = school.lat
     lon = school.lon
-    ratio = (votes.to_f / total )
-    popup = "#{ratio} ratio, #{votes} votos, #{total} total, #{max}max, #{min} min   #{school.id} id#{school.name} ".gsub(/[^0-9a-z ]/i, '') 
-    leaflet_circles({'ratio' => ratio, 'total' => total, 'min'=> min , 'max' => max, 'lat' => lat, 'lon' => lon, 'popup' => popup })
+    ratio = (votes.to_f / total)
+    popup = "#{ratio} ratio, #{votes} votos, #{total} total,   #{school.id} id#{school.name} ".gsub(/[^0-9a-z ]/i, '') 
+    leaflet_circles({'ratio' => ratio, 'lat' => lat, 'lon' => lon, 'popup' => popup })
 
   end
   leaflet = interpolate_range(leaflet_without_interpolation, 100)

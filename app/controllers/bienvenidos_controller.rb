@@ -73,16 +73,13 @@ def circulos_de_intensidad(selected = {'cargo_id' => 1, 'partido_id' => 1})
     lon = school.lon
     ratio = (votes.to_f / total )
     popup = "#{ratio} ratio, #{votes} votos, #{total} total, #{max}max, #{min} min   #{school.id} id#{school.name} ".gsub(/[^0-9a-z ]/i, '') 
-    leaflet_circles({'intensity' => ratio, 'total' => total, 'min'=> min , 'max' => max, 'lat' => lat, 'lon' => lon, 'popup' => popup })
+    leaflet_circles({'ratio' => ratio, 'total' => total, 'min'=> min , 'max' => max, 'lat' => lat, 'lon' => lon, 'popup' => popup })
 
   end
   leaflet = interpolate_range(leaflet_without_interpolation, 100)
-  labels = labels_a({:min => min, :max => max, :total => total})
-  { :leaflet => leaflet, :labels => labels}
-
+  labels = labels_a({:min => leaflet[:min], :max => leaflet[:max]})
+  { :leaflet => leaflet[:circles], :labels => labels}
 end
-
-
  
 def circulos_partido(selected = {'partido_id' => 1})
   max = 0
@@ -115,32 +112,25 @@ def circulos_partido(selected = {'partido_id' => 1})
     lon = school.lon
     ratio = (added_votes.to_f / total *5 )
     popup = "#{ratio} ratio, #{added_votes} votos \n #{school.name} #{school.address}".gsub(/[^0-9a-z ]/i, '')
-    leaflet_circles({'intensity' => ratio, 'total' => total, 'min'=> min , 'max' => max, 'lat' => lat, 'lon' => lon, 'popup' => popup})
+    leaflet_circles({'ratio' => ratio, 'total' => total, 'min'=> min , 'max' => max, 'lat' => lat, 'lon' => lon, 'popup' => popup})
   end
     labels = labels_a({:min => min, :max => max, :total => total})
   { :leaflet => leaflet, :labels => labels}
 end
 
 def leaflet_circles (circles)
-    fraction = circles['intensity']
-    intensity = 100 * (fraction - (circles['min'].to_f / circles['total']) ) / ( (circles['max'].to_f / circles['total']) - ( circles['min'].to_f / circles['total'] ) ) 
-    intensity = 0 if intensity < 0
-    intensity = 5000 if intensity > 5000
-    intensity = circles['intensity']*100
     {:latlng => [circles['lon'], circles['lat']],
      :radius => 200, 
-     :color =>"##{@gradient.gradient(intensity).to_s(16)}", 
-     :fillColor => "##{@gradient.gradient(intensity).to_s(16)}",
      :fillOpacity =>  1 , 
      :popup => circles['popup'],
-     :ratio => circles['intensity'] }
+     :ratio => circles['ratio'] }
  end
 
 def labels_a ( min_max)
   increment = (min_max[:max] - min_max[:min] ).to_f / @legend_samples
   lab_arr = []
   @legend_samples.times do |time|
-    lab_arr.push ((min_max[:max] - (increment * time) ) /  min_max[:total])
+    lab_arr.push (min_max[:max] - (increment * time))
   end
   lab_arr
 end
@@ -156,6 +146,7 @@ def interpolate_range(circles, samples)
     circle[:fillColor] = "##{@gradient.gradient(intensity).to_s(16)}"
     circle
   end
+  {:circles => with_proper_colors, :max => max, :min => min}
 end
 
 

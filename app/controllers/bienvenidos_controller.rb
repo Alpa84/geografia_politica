@@ -47,21 +47,29 @@ LEGEND_SAMPLES = 5
     @miguel_circles = circulos_de_intensidad({'cargo_id' => 2, 'partido_id' => 4})
     @intendente_pro_circles = circulos_de_intensidad({'cargo_id' => 5, 'partido_id' => 2})
     
-    @pro_circles = circulos_partido({'partido_id' => 2})
+    @pro_circles = circulos_de_intensidad({'partido_id' => 2})
     @pro_map = alt_map(:container_id => "map2",
     :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
     :circles =>  @pro_circles[:leaflet])
 
-    @socialismo_circles = circulos_partido({'partido_id' => 4})
-    @k_circles = circulos_partido({'partido_id' => 3})
+    @socialismo_circles = circulos_de_intensidad({'partido_id' => 4})
+    @k_circles = circulos_de_intensidad({'partido_id' => 3})
   end
 end
 
-def circulos_de_intensidad(selected = {'cargo_id' => 1, 'partido_id' => 1})
+def circulos_de_intensidad(selected = {'partido_id' => 1})
   votes_for_party = VotesTotal.where(political_party_id:selected['partido_id'])
   leaflet_without_interpolation = School.all.collect do |school|
-
-    votes = votes_for_party.where(public_office_id:selected['cargo_id']).where(school_id:school.id)[0].votes
+    if selected['cargo_id']
+      votes = votes_for_party.where(public_office_id:selected['cargo_id']).where(school_id:school.id)[0].votes
+      total = school.total
+    else
+      votes = 0
+      all_offices_votes = votes_for_party.where(school_id:school.id).each do |office_votes|
+        votes += office_votes.votes
+      end
+      total = school.total * 5
+    end
     total = school.total
     lat = school.lat
     lon = school.lon
@@ -75,42 +83,6 @@ def circulos_de_intensidad(selected = {'cargo_id' => 1, 'partido_id' => 1})
   { :leaflet => leaflet[:circles], :labels => labels}
 end
  
-def circulos_partido(selected = {'partido_id' => 1})
-  max = 0
-  min = nil
-  total = 0
-  leaflet = {}
-  School.all.collect do |school|
-    votes_for_party = VotesTotal.where(political_party_id:selected['partido_id'])
-    separed_votes = votes_for_party.where(school_id:school.id)
-    added_votes = 0
-    separed_votes.each do |i_votes|
-      added_votes += i_votes.votes
-    end
-    max = added_votes if added_votes > max
-    min = added_votes if min.nil?
-    min = added_votes if added_votes < min
-
-  end
-
-  leaflet = School.all.collect do |school|
-    votes_for_party = VotesTotal.where(political_party_id:selected['partido_id'])
-    separed_votes = votes_for_party.where(school_id:school.id)
-    added_votes = 0
-    separed_votes.each do |i_votes|
-      added_votes += i_votes.votes
-    end
-    total = school.total
-    ratio = added_votes/total
-    lat = school.lat
-    lon = school.lon
-    ratio = (added_votes.to_f / total *5 )
-    popup = "#{ratio} ratio, #{added_votes} votos \n #{school.name} #{school.address}".gsub(/[^0-9a-z ]/i, '')
-    leaflet_circles({'ratio' => ratio, 'total' => total, 'min'=> min , 'max' => max, 'lat' => lat, 'lon' => lon, 'popup' => popup})
-  end
-    labels = labels_a({:min => min, :max => max, :total => total})
-  { :leaflet => leaflet, :labels => labels}
-end
 
 def leaflet_circles (circles)
     {:latlng => [circles['lon'], circles['lat']],

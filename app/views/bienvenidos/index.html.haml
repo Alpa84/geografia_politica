@@ -36,8 +36,7 @@
       = (@socialismo_circles[:labels][time] * 100 / 5).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ● 
   .span7
-    = map(:container_id => "map3",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-    :circles =>  @socialismo_circles[:leaflet])
+    = @socialismo_circles_map
 %br
 .row  
   .span3
@@ -48,8 +47,7 @@
       = (@k_circles[:labels][time] * 100 / 5).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
   .span7
-    = map(:container_id => "mapk",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-    :circles =>  @k_circles[:leaflet])
+    = @k_circles_map
 %br
 .row
   .span2
@@ -57,16 +55,14 @@
     %p el ex intendente tiene mejores resultados en toda la ciudad, comparado con otros candidatos
   .span3
     %h4 Votos para Mónica Fein
-    = map(:container_id => "map4",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-    :circles =>  @fein_circles[:leaflet])
+    = @fein_circles_map
   .span1
     - @legend_samples.times do |time|
       = (@fein_circles[:labels][time] * 100).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
   .span3
     %h4 Votos para Lifchitz
-    = map(:container_id => "map5",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, |
-    :circles =>  @miguel_circles[:leaflet])
+    = @miguel_circles_map
   .span1
     - @legend_samples.times do |time|
       = (@miguel_circles[:labels][time] * 100).round.to_s+"%"
@@ -77,15 +73,12 @@
     %h3 Un caso raro..
     %p el candidato a gobernador del PRO obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela
   .span6
-    = map(:container_id => "map6",:center => {:latlng => [-32.980012,-60.657849],:zoom => 12 }, |
-    :circles => @intendente_pro_circles[:leaflet])
+    = @intendente_pro_circles_map
   .span1
     - @legend_samples.times do |time|
       = (@intendente_pro_circles[:labels][time] * 100).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
 %br
-
-!= @constructed_java
 
 %a.list-group-item-text
   %h4.list-group-item-text Metodología

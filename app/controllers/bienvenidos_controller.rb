@@ -7,7 +7,7 @@ HIGH__COLOR = 0xFFFFFF
 SAMPLES = 100
 LEGEND_SAMPLES = 5
   def index
-    @color = "#0B6138"
+  
     @legend_samples = LEGEND_SAMPLES
     if params['partido'].blank? || params['partido']['political_party_id'].blank?
       @partido_seleccionado = PoliticalParty.first
@@ -26,34 +26,41 @@ LEGEND_SAMPLES = 5
  
     @gradient = Gradient.new( LOW_COLOR, HIGH__COLOR, SAMPLES)
 
-    @constructed_java = alt_map(:container_id => "map",:center => {:latlng => [-32.954088, -60.664458],:zoom => 12 }, 
-     :circles => [{:latlng => [-32.954088, -60.664458],
-     :radius => 200, :color =>"##{@gradient.gradient(2).to_s(16)}", :fillColor => "##{@gradient.gradient(3).to_s(16)}",
-     :fillOpacity =>  0.5 ,
-     :popup => 'lolo'
-     } , {:latlng => [-32.964088, -60.664458],
-     :radius => 300, :color =>"##{@gradient.gradient(2).to_s(16)}", :fillColor => "##{@gradient.gradient(3).to_s(16)}",
-     :fillOpacity =>  0.5 ,
-     :popup => 'lolo'
-     }]
-     )
-
 
     @all_circles = circulos_de_intensidad({'cargo_id' => @cargo_seleccionado.id, 'partido_id' => @partido_seleccionado.id})
-    @all_circles_map = alt_map(:container_id => "map1",
+    @all_circles_map = alt_map(:container_id => "map_all",
     :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
     :circles =>  @all_circles[:leaflet])
+
     @fein_circles = circulos_de_intensidad({'cargo_id' => 4, 'partido_id' => 4})
+    @fein_circles_map = alt_map(:container_id => "map_fein",
+    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
+    :circles =>  @fein_circles[:leaflet])
+
     @miguel_circles = circulos_de_intensidad({'cargo_id' => 2, 'partido_id' => 4})
-    @intendente_pro_circles = circulos_de_intensidad({'cargo_id' => 5, 'partido_id' => 2})
-    
+    @miguel_circles_map = alt_map(:container_id => "map_mig",
+    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
+    :circles =>  @miguel_circles[:leaflet])
+
+    @intendente_pro_circles = circulos_de_intensidad({'cargo_id' => 4, 'partido_id' => 2})
+    @intendente_pro_circles_map = alt_map(:container_id => "map_int_pro",
+    :center => {:latlng => [-32.980012,-60.657849],:zoom => 12 },
+    :circles =>  @intendente_pro_circles[:leaflet])
+
     @pro_circles = circulos_de_intensidad({'partido_id' => 2})
-    @pro_map = alt_map(:container_id => "map2",
+    @pro_map = alt_map(:container_id => "map_pro",
     :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
     :circles =>  @pro_circles[:leaflet])
 
     @socialismo_circles = circulos_de_intensidad({'partido_id' => 4})
+    @socialismo_circles_map = alt_map(:container_id => "map_soc",
+    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
+    :circles =>  @socialismo_circles[:leaflet])
+
     @k_circles = circulos_de_intensidad({'partido_id' => 3})
+    @k_circles_map = alt_map(:container_id => "map_k",
+    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
+    :circles =>  @k_circles[:leaflet])
   end
 end
 
@@ -70,11 +77,10 @@ def circulos_de_intensidad(selected = {'partido_id' => 1})
       end
       total = school.total * 5
     end
-    total = school.total
     lat = school.lat
     lon = school.lon
     ratio = (votes.to_f / total)
-    popup = "#{ratio} ratio, #{votes} votos, #{total} total,   #{school.id} id#{school.name} ".gsub(/[^0-9a-z ]/i, '') 
+    popup = "#{ratio} ratio, #{votes} votos, #{total} total"   # #{school.name} ".gsub(/[^0-9a-z ]/i, '') 
     leaflet_circles({'ratio' => ratio, 'lat' => lat, 'lon' => lon, 'popup' => popup })
 
   end

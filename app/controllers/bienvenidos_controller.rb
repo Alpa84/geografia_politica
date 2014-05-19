@@ -3,7 +3,7 @@ require 'uri'
 class BienvenidosController < ApplicationController
 
 LOW_COLOR  = 0x000000 
-HIGH__COLOR = 0xFFFFFF
+HIGH__COLOR = 0xFF7700
 SAMPLES = 100
 LEGEND_SAMPLES = 5
   def index
@@ -25,7 +25,6 @@ LEGEND_SAMPLES = 5
     end
  
     @gradient = Gradient.new( LOW_COLOR, HIGH__COLOR, SAMPLES)
-
 
     @all_circles = circulos_de_intensidad({'cargo_id' => @cargo_seleccionado.id, 'partido_id' => @partido_seleccionado.id})
     @all_circles_map = alt_map(:container_id => "map_all",
@@ -99,7 +98,7 @@ def leaflet_circles (circles)
  end
 
 def labels_a ( min_max)
-  increment = (min_max[:max] - min_max[:min] ).to_f / @legend_samples
+  increment = ((min_max[:max] - min_max[:min] ).to_f / (@legend_samples  ) )
   lab_arr = []
   @legend_samples.times do |time|
     lab_arr.push (min_max[:max] - (increment * time))

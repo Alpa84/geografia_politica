@@ -1,5 +1,6 @@
 
 %h1 Geografía Política 
+
 .row
   .span11
     %h3 Explorar Resultados
@@ -31,23 +32,23 @@
   .span3
     %h3 El centro es del Socialismo
     %p la derecha parece ganar en los barrios, y en las zonas suburbanas
+  .span7
+    = @socialismo_circles_map
   .span1
     - @legend_samples.times do |time|
       = (@socialismo_circles[:labels][time] * 100 / 5).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ● 
-  .span7
-    = @socialismo_circles_map
 %br
 .row  
   .span3
     %h3 Kirchnerismo de barrio
     %p la derecha parece ganar en los barrios, y en las zonas suburbanas
+  .span7
+    = @k_circles_map
   .span1
     - @legend_samples.times do |time|
       = (@k_circles[:labels][time] * 100 / 5).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
-  .span7
-    = @k_circles_map
 %br
 .row
   .span2

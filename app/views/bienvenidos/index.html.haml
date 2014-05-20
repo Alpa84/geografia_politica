@@ -3,8 +3,8 @@
 
 .row
   .span11
-    %h3 Explorar Resultados
-    %p elegir el cargo y el partido político
+    %h3 Las preferencias políticas de la ciudad, suegún las elecciones de 2013
+    %p Se puede tener una noción aproximada de las preferencias electorales de los habitantes de cada zona de la ciudad al momento de las últimas elecciones observando los resultados electorales específicos de cada escuela (local electoral).
     = form_tag({controller: "bienvenidos", action: "index"} , remote: true, method: "get", class: "form-group") do
       = label_tag :partido
       = select 'partido', 'political_party_id',  PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {:selected => 65 }
@@ -23,7 +23,7 @@
     %h3 Kirchnerismo de barrio
     %p El frente para la victoria tiene una influencia marcada en los barrios  
   .span7
-    %h5 Partido: Frente Santa Fe para Todos, Todos los Cargos
+    %h4 Partido: Frente Santa Fe para Todos, Todos los Cargos
     = @k_circles_map
   .span1
     - @legend_samples.times do |time|
@@ -35,7 +35,7 @@
     %h3 El centro es del Socialismo
     %p el socialismo cobra fuerza en la zona céntrica de la ciudad
   .span7
-    %h5 Partido: Frente Progresista Cívico y Social, Todos los Cargos
+    %h4 Partido: Frente Progresista Cívico y Social, Todos los Cargos
     = @socialismo_circles_map
   .span1
     - @legend_samples.times do |time|
@@ -46,7 +46,7 @@
     %h3 Huyamos.. hacia la derecha
     %p la derecha parece ganar fuerza en los barrios y en las zonas suburbanas
   .span7
-    %h5 Partido: Unión Pro Federal, Todos los Cargos
+    %h4 Partido: Unión Pro Federal, Todos los Cargos
     != @pro_map
   .span1
     - @legend_samples.times do |time|
@@ -54,31 +54,12 @@
       = (@pro_circles[:labels][time] * 100 ).round.to_s+"%"
 
 %br
-.row
-  .span2
-    %h3 Lifchitz es tenido en cuenta por toda la ciudad
-    %p el ex intendente tiene mejores resultados en toda la ciudad, comparado con otros candidatos
-  .span3
-    %h4 Votos para Mónica Fein
-    = @fein_circles_map
-  .span1
-    - @legend_samples.times do |time|
-      = (@fein_circles[:labels][time] * 100).round.to_s+"%"
-      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
-  .span3
-    %h4 Votos para Lifchitz
-    = @miguel_circles_map
-  .span1
-    - @legend_samples.times do |time|
-      = (@miguel_circles[:labels][time] * 100).round.to_s+"%"
-      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
-%br
 .row  
   .span3
     %h3 Un caso raro..
     %p el candidato a gobernador Raul Castells obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela 
   .span6
-    %h5 Partido: Movimiento Independiente Justicia y Dignidad, Todos los Cargos
+    %h4 Partido: Movimiento Independiente Justicia y Dignidad, Todos los Cargos
     = @castells_circles_map
   .span1
     - @legend_samples.times do |time|
@@ -86,24 +67,23 @@
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
 %br
 
-%p castells gobernador del mov indep de justicia y ren -consejal tambien, en los demas, tiene una esc fija. coincidiran con las zonas de pobreza?
-
-%a.list-group-item-text
-  %h4.list-group-item-text Metodología
-  %p Se puede tener una noción aproximada de las preferencias electorales de los habitantes de cada zona de la ciudad al momento de las últimas elecciones observando los resultados electorales específicos de cada escuela (local electoral).
-  %br
-  %p Fundamentación:
-  Cada votante Rosarino es asignado por la Secretaría Electoral Nacional a una escuela cercana al domicilio en el que esta registrado en el padrón (ref). En algunos casos el padrón electoral puede no coincidir con el domicilio real de cada votante, por estar desactualizado o por otras razones, sin embargo creemos que en su mayor parte, los datos del domicilio registrados en el padrón electoral son representativos del domicilio real de los votantes.
-  %br
-  %p Metodología:
-  Se sumaron los resultados de las elecciones de 2011 de cada candidato de todas las mesas de cada local electoral. Fuente
-  Se relevó la ubicación geográfica de los 245 locales electorales (Fuente) por medios automatizados  y se revisó cada uno de estos resultados. 
-  %br
-  %p Visualización de los resultados:
-  Cada columna en el mapa está ubicada  de acuerdo al domicilio de cada local electoral en la ciudad. La altura de cada columna representa la proporción de votos que obtuvo cada candidato comparado con el total de votos efectuados en ese local electoral.
-  La altura corresponde a los valores relativos de los resultados y no a los absolutos, para evitar que los resultados por zona no varíen en función a la cantidad total de votos de cada escuela.
-  La referencia de los colores de las columnas va del verde claro para los resultados más bajos de cada candidato hasta el rojo intenso para sus resultados más altos.
 
 
+
+
+%br
+%h4 Fundamentación:
+Cada votante Rosarino es asignado por la Secretaría Electoral Nacional a una escuela cercana al domicilio en el que esta registrado en el padrón (ref). En algunos casos el padrón electoral puede no coincidir con el domicilio real de cada votante, por estar desactualizado o por otras razones, sin embargo creemos que en su mayor parte, los datos del domicilio registrados en el padrón electoral son representativos del domicilio real de los votantes.
+%br
+%h4 Metodología:
+Se sumaron los resultados de las elecciones de 2011 de cada candidato de todas las mesas de cada local electoral. Fuente
+Se relevó la ubicación geográfica de los 245 locales electorales (Fuente) por medios automatizados  y se revisó cada uno de estos resultados. 
+%br
+%h4 Visualización de los resultados:
+Cada círculo en el mapa está ubicado  de acuerdo al domicilio de cada local electoral en la ciudad. El color de cada círculo representa la proporción de votos que obtuvo cada candidato comparado con el total de votos efectuados en ese local electoral.
+La referencia de los colores de las columnas va del negro para los resultados más bajos de cada candidato hasta el naranja intenso para sus resultados más altos.
+Se representan los valores relativos de los resultados (el porcentaje del total) y no a los absolutos, para evitar que los resultados por zona no varíen en función a la cantidad total de votos de cada escuela.
+
+%br
 
 

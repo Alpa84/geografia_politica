@@ -9,23 +9,16 @@ LEGEND_SAMPLES = 5
   def index
   
     @legend_samples = LEGEND_SAMPLES
-    if params['partido'].blank? || params['partido']['political_party_id'].blank?
-      @partido_seleccionado = PoliticalParty.first
-      @partido_seleccionado_name = @partido_seleccionado['name'].humanize
-    else 
-      @partido_seleccionado = PoliticalParty.where(id:params['partido']["political_party_id"])[0]
-      @partido_seleccionado_name  = @partido_seleccionado['name'].humanize
-    end
-    if params['cargo'].blank? || params['cargo']["public_office_id"].blank?
-      @cargo_seleccionado = PublicOffice.first
-      @cargo_seleccionado_name = @cargo_seleccionado['name'].humanize
+    if params['partido'].blank? # || params['partido']['political_party_id'].blank?
+      @partido_id = 66
+      @cargo_id = 2
     else
-      @cargo_seleccionado = PublicOffice.where(id:params['cargo']["public_office_id"])[0]
-      @cargo_seleccionado_name  = @cargo_seleccionado['name'].humanize
+      @partido_id = params['partido']['political_party_id']
+      @cargo_id = params['partido']['public_office_id']
     end
  
     @gradient = Gradient.new( LOW_COLOR, HIGH__COLOR, SAMPLES)
-    @all_circles = circulos_de_intensidad({'cargo_id' => @cargo_seleccionado.id, 'partido_id' => @partido_seleccionado.id})
+    @all_circles = circulos_de_intensidad({'cargo_id' => @cargo_id, 'partido_id' => @partido_id})
     @all_circles_map = alt_map(:container_id => "map_all",
     :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
     :circles =>  @all_circles[:leaflet])
@@ -65,7 +58,7 @@ end
 def circulos_de_intensidad(selected = {'partido_id' => 1})
   votes_for_party = VotesTotal.where(political_party_id:selected['partido_id'])
   leaflet_without_interpolation = School.all.collect do |school|
-    if selected['cargo_id']
+    if selected['cargo_id'] and selected['cargo_id'] != 't'
       votes = votes_for_party.where(public_office_id:selected['cargo_id']).where(school_id:school.id)[0].votes
       total = school.total
     else
@@ -78,7 +71,7 @@ def circulos_de_intensidad(selected = {'partido_id' => 1})
     lat = school.lat
     lon = school.lon
     ratio = (votes.to_f / total)
-    popup = "#{ratio} ratio, #{votes} votos, #{total} total, ide de la escue #{school.name} ".gsub(/[°()\'\"]/i, '') 
+    popup = "#{(ratio*100).round(2)}% de este local electoral, #{votes} votos de un total de #{total}, #{school.name} ".gsub(/[°()\'\"]/i, '') 
     leaflet_circles({'ratio' => ratio, 'lat' => lat, 'lon' => lon, 'popup' => popup })
 
   end

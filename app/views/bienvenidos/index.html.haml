@@ -7,8 +7,9 @@
     %p elegir el cargo y el partido político
     = form_tag({controller: "bienvenidos", action: "index"} , remote: true, method: "get", class: "form-group") do
       = label_tag :partido
-      = select 'partido', 'political_party_id',  PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {:selected => 'lalala'}
-      = select 'cargo', 'public_office_id',  PublicOffice.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }
+      = select 'partido', 'political_party_id',  PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {:selected => 65 }
+      - public_offices_plus_one = PublicOffice.all.order(:name).collect {|p| [ p.name.humanize, p.id ]} + [['Todos los Cargos', 't'] ]
+      = select 'cargo', 'public_office_id', public_offices_plus_one , {:selected => 2 } 
       = submit_tag("Mostrar", {class:'btn btn-primary'})
 .row
   %div#mapa_part
@@ -16,7 +17,28 @@
 
 .row
   %h2#type-blockquotes Algunas miradas
-  %br
+.row  
+  .span3
+    %h3 Kirchnerismo de barrio
+    %p El frente para la victoria tiene una influencia marcada en los barrios  
+  .span7
+    = @k_circles_map
+  .span1
+    - @legend_samples.times do |time|
+      = (@k_circles[:labels][time] * 100 ).round.to_s+"%"
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
+%br
+.row  
+  .span3
+    %h3 El centro es del Socialismo
+    %p el socialismo cobra fuerza en la zona céntrica de la ciudad
+  .span7
+    = @socialismo_circles_map
+  .span1
+    - @legend_samples.times do |time|
+      = (@socialismo_circles[:labels][time] * 100).round.to_s+"%"
+      %p{:class => ["lab#{time.to_s}", 'labels' ] } ● 
+%br
   .span3
     %h3 Huyamos.. hacia la derecha
     %p la derecha parece ganar fuerza en los barrios y en las zonas suburbanas
@@ -27,28 +49,6 @@
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
       = (@pro_circles[:labels][time] * 100 ).round.to_s+"%"
 
-%br
-.row  
-  .span3
-    %h3 El centro es del Socialismo
-    %p la derecha parece ganar en los barrios, y en las zonas suburbanas
-  .span7
-    = @socialismo_circles_map
-  .span1
-    - @legend_samples.times do |time|
-      = (@socialismo_circles[:labels][time] * 100).round.to_s+"%"
-      %p{:class => ["lab#{time.to_s}", 'labels' ] } ● 
-%br
-.row  
-  .span3
-    %h3 Kirchnerismo de barrio
-    %p la derecha parece ganar en los barrios, y en las zonas suburbanas
-  .span7
-    = @k_circles_map
-  .span1
-    - @legend_samples.times do |time|
-      = (@k_circles[:labels][time] * 100 ).round.to_s+"%"
-      %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
 %br
 .row
   .span2

@@ -9,7 +9,7 @@ LEGEND_SAMPLES = 5
   def index
   
     @legend_samples = LEGEND_SAMPLES
-    if params['partido'].blank? # || params['partido']['political_party_id'].blank?
+    if params['partido'].blank? 
       @partido_id = 66
       @cargo_id = 2
     else
@@ -35,7 +35,7 @@ LEGEND_SAMPLES = 5
 
     @castells_circles = circulos_de_intensidad({'cargo_id' => 1, 'partido_id' => 5})
     @castells_circles_map = alt_map(:container_id => "map_castells",
-    :center => {:latlng => [-32.980012,-60.657849],:zoom => 12 },
+    :center => {:latlng => [-32.94,-60.66],:zoom => 13 },
     :circles =>  @castells_circles[:leaflet])
 
     @pro_circles = circulos_de_intensidad({'partido_id' => 2})

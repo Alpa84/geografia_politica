@@ -9,6 +9,7 @@
       = label_tag :partido
       = select 'partido', 'political_party_id',  PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {:selected => 65 }
       - public_offices_plus_one = PublicOffice.all.order(:name).collect {|p| [ p.name.humanize, p.id ]} + [['Todos los Cargos', 't'] ]
+      = label_tag :cargo
       = select 'cargo', 'public_office_id', public_offices_plus_one , {:selected => 2 } 
       = submit_tag("Mostrar", {class:'btn btn-primary'})
 .row
@@ -22,6 +23,7 @@
     %h3 Kirchnerismo de barrio
     %p El frente para la victoria tiene una influencia marcada en los barrios  
   .span7
+    %h5 Partido: Frente Santa Fe para Todos, Todos los Cargos
     = @k_circles_map
   .span1
     - @legend_samples.times do |time|
@@ -33,6 +35,7 @@
     %h3 El centro es del Socialismo
     %p el socialismo cobra fuerza en la zona céntrica de la ciudad
   .span7
+    %h5 Partido: Frente Progresista Cívico y Social, Todos los Cargos
     = @socialismo_circles_map
   .span1
     - @legend_samples.times do |time|
@@ -43,6 +46,7 @@
     %h3 Huyamos.. hacia la derecha
     %p la derecha parece ganar fuerza en los barrios y en las zonas suburbanas
   .span7
+    %h5 Partido: Unión Pro Federal, Todos los Cargos
     != @pro_map
   .span1
     - @legend_samples.times do |time|
@@ -74,6 +78,7 @@
     %h3 Un caso raro..
     %p el candidato a gobernador Raul Castells obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela 
   .span6
+    %h5 Partido: Movimiento Independiente Justicia y Dignidad, Todos los Cargos
     = @castells_circles_map
   .span1
     - @legend_samples.times do |time|

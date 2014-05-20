@@ -3,7 +3,7 @@
 
 .row
   .span11
-    %h3 Las preferencias políticas de la ciudad, suegún las elecciones de 2013
+    %h3 Las preferencias políticas de la ciudad, según las elecciones de 2013
     %p Se puede tener una noción aproximada de las preferencias electorales de los habitantes de cada zona de la ciudad al momento de las últimas elecciones observando los resultados electorales específicos de cada escuela (local electoral).
     = form_tag({controller: "bienvenidos", action: "index"} , remote: true, method: "get", class: "form-group") do
       = label_tag :partido
@@ -33,7 +33,7 @@
 .row  
   .span3
     %h3 El centro es del Socialismo
-    %p el socialismo cobra fuerza en la zona céntrica de la ciudad
+    %p El socialismo cobra fuerza en la zona céntrica de la ciudad
   .span7
     %h4 Partido: Frente Progresista Cívico y Social, Todos los Cargos
     = @socialismo_circles_map
@@ -44,7 +44,7 @@
 %br
   .span3
     %h3 Huyamos.. hacia la derecha
-    %p la derecha parece ganar fuerza en los barrios y en las zonas suburbanas
+    %p La derecha parece ganar fuerza en los barrios y en las zonas suburbanas
   .span7
     %h4 Partido: Unión Pro Federal, Todos los Cargos
     != @pro_map
@@ -57,7 +57,7 @@
 .row  
   .span3
     %h3 Un caso raro..
-    %p el candidato a gobernador Raul Castells obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela 
+    %p El candidato a gobernador Raul Castells obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela 
   .span6
     %h4 Partido: Movimiento Independiente Justicia y Dignidad, Todos los Cargos
     = @castells_circles_map

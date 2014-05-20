@@ -25,7 +25,7 @@
   .span1
     - @legend_samples.times do |time|
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
-      = (@pro_circles[:labels][time] * 100 / 5).round.to_s+"%"
+      = (@pro_circles[:labels][time] * 100 ).round.to_s+"%"
 
 %br
 .row  
@@ -36,7 +36,7 @@
     = @socialismo_circles_map
   .span1
     - @legend_samples.times do |time|
-      = (@socialismo_circles[:labels][time] * 100 / 5).round.to_s+"%"
+      = (@socialismo_circles[:labels][time] * 100).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ● 
 %br
 .row  
@@ -47,7 +47,7 @@
     = @k_circles_map
   .span1
     - @legend_samples.times do |time|
-      = (@k_circles[:labels][time] * 100 / 5).round.to_s+"%"
+      = (@k_circles[:labels][time] * 100 ).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
 %br
 .row
@@ -72,14 +72,16 @@
 .row  
   .span3
     %h3 Un caso raro..
-    %p el candidato a gobernador del PRO obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela
+    %p el candidato a gobernador Raul Castells obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela 
   .span6
-    = @intendente_pro_circles_map
+    = @castells_circles_map
   .span1
     - @legend_samples.times do |time|
-      = (@intendente_pro_circles[:labels][time] * 100).round.to_s+"%"
+      = (@castells_circles[:labels][time] * 100).round.to_s+"%"
       %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
 %br
+
+%p castells gobernador del mov indep de justicia y ren -consejal tambien, en los demas, tiene una esc fija. coincidiran con las zonas de pobreza?
 
 %a.list-group-item-text
   %h4.list-group-item-text Metodología

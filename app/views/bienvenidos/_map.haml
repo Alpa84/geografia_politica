@@ -2,6 +2,8 @@
   = @all_circles_map
 .span1
   - @legend_samples.times do |time|
-    = (@all_circles[:labels][time] * 100).round.to_s+"%"
+    - decimals = 0
+    - decimals = 2 if (@all_circles[:labels].first - @all_circles[:labels].last) < 0.06
+    = (@all_circles[:labels][time] * 100).round(decimals).to_s+"%"
     %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
     

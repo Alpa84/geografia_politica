@@ -25,7 +25,6 @@ LEGEND_SAMPLES = 5
     end
  
     @gradient = Gradient.new( LOW_COLOR, HIGH__COLOR, SAMPLES)
-
     @all_circles = circulos_de_intensidad({'cargo_id' => @cargo_seleccionado.id, 'partido_id' => @partido_seleccionado.id})
     @all_circles_map = alt_map(:container_id => "map_all",
     :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
@@ -41,10 +40,10 @@ LEGEND_SAMPLES = 5
     :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
     :circles =>  @miguel_circles[:leaflet])
 
-    @intendente_pro_circles = circulos_de_intensidad({'cargo_id' => 4, 'partido_id' => 2})
-    @intendente_pro_circles_map = alt_map(:container_id => "map_int_pro",
+    @castells_circles = circulos_de_intensidad({'cargo_id' => 1, 'partido_id' => 5})
+    @castells_circles_map = alt_map(:container_id => "map_castells",
     :center => {:latlng => [-32.980012,-60.657849],:zoom => 12 },
-    :circles =>  @intendente_pro_circles[:leaflet])
+    :circles =>  @castells_circles[:leaflet])
 
     @pro_circles = circulos_de_intensidad({'partido_id' => 2})
     @pro_map = alt_map(:container_id => "map_pro",
@@ -79,7 +78,7 @@ def circulos_de_intensidad(selected = {'partido_id' => 1})
     lat = school.lat
     lon = school.lon
     ratio = (votes.to_f / total)
-    popup = "#{ratio} ratio, #{votes} votos, #{total} total"   # #{school.name} ".gsub(/[^0-9a-z ]/i, '') 
+    popup = "#{ratio} ratio, #{votes} votos, #{total} total, ide de la escue #{school.name} ".gsub(/[°()\'\"]/i, '') 
     leaflet_circles({'ratio' => ratio, 'lat' => lat, 'lon' => lon, 'popup' => popup })
 
   end
@@ -98,7 +97,7 @@ def leaflet_circles (circles)
  end
 
 def labels_a ( min_max)
-  increment = ((min_max[:max] - min_max[:min] ).to_f / (@legend_samples  ) )
+  increment = ((min_max[:max] - min_max[:min] ).to_f / (@legend_samples -1  ) )
   lab_arr = []
   @legend_samples.times do |time|
     lab_arr.push (min_max[:max] - (increment * time))

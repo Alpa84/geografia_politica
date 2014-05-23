@@ -7,6 +7,19 @@ HIGH__COLOR = 0xFF7700
 SAMPLES = 100
 LEGEND_SAMPLES = 5
   def index
+    @public_offices_plus_one = PublicOffice.all.order(:name).collect {|p| [ p.name.humanize, p.id ]} + [['Todos los Cargos', 't'] ]
+    @partidos_drop = PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ]}
+    @partidos_drop.each do |part|
+      case part[1]
+      when 4
+        part[0] = [part[0], ' (Part. Socialista)'].join
+      when 3
+        part[0] = [part[0], ' (Kirchnerismo)'].join
+      when 2
+        part[0] = [part[0], ' (PRO)'].join
+      end
+    end
+
   
     @legend_samples = LEGEND_SAMPLES
     if params['partido'].blank? 

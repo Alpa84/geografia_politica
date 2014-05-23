@@ -1,16 +1,19 @@
 
 %h1 Geografía Política 
-
+-#
+  .bgimg
+    %h2 cancheroo
+    %h1 lolooo
 .row
   .span11
     %h3 Las preferencias políticas de la ciudad, según las elecciones de 2013
     %p Se puede tener una noción aproximada de las preferencias electorales de los habitantes de cada zona de la ciudad al momento de las últimas elecciones observando los resultados electorales específicos de cada escuela (local electoral).
     = form_tag({controller: "bienvenidos", action: "index"} , remote: true, method: "get", class: "form-group") do
       = label_tag :partido
-      = select 'partido', 'political_party_id',  PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ] }, {:selected => 65 }
-      - public_offices_plus_one = PublicOffice.all.order(:name).collect {|p| [ p.name.humanize, p.id ]} + [['Todos los Cargos', 't'] ]
+      -# =>  @partidos_drop = PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ]}
+      = select 'partido', 'political_party_id', @partidos_drop , {:selected => 65 }
       = label_tag :cargo
-      = select 'cargo', 'public_office_id', public_offices_plus_one , {:selected => 2 } 
+      = select 'cargo', 'public_office_id', @public_offices_plus_one , {:selected => 2 } 
       = submit_tag("Mostrar", {class:'btn btn-primary'})
 .row
   %div#mapa_part

@@ -84,7 +84,7 @@ def circulos_de_intensidad(selected = {'partido_id' => 1})
     lat = school.lat
     lon = school.lon
     ratio = (votes.to_f / total)
-    popup = "#{(ratio*100).round(2)}% de este local electoral, #{votes} votos de un total de #{total}, #{school.name} ".gsub(/[°()\'\"]/i, '') 
+    popup = "<b>#{(ratio*100).round(2)}%</b> de este local electoral, <br><b>#{votes}</b> votos de un total de <b>#{total}</b>, <br>#{school.name} ".gsub(/[°()\'\"]/i, '') 
     leaflet_circles({'ratio' => ratio, 'lat' => lat, 'lon' => lon, 'popup' => popup })
 
   end

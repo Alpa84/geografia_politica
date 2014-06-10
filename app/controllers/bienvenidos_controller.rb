@@ -70,10 +70,10 @@ def circulos_de_intensidad(selected = {'party_id' => 1})
       lon = vote_school.school.lon
       ratio = (votes.to_f / total)
       intensity = (ratio - min ) * 100 / votes_range
-      color = @gradient.gradient(intensity).to_s(16)
+      color = "#" + @gradient.gradient(intensity).to_s(16)
       school_name = vote_school.school.name
       popup = "<b>#{(ratio*100).round(2)}%</b> de este local electoral, <br><b>#{votes}</b> votos de un total de <b>#{total}</b>, <br>#{school_name} ".gsub(/[°()\'\"]/i, '') 
-      circles = {:ratio => ratio, :latlng => [lon, lat], :popup => popup ,:radius => @radius, :fillOpacity  => @fillOpacity,:color => "##{@gradient.gradient(intensity).to_s(16)}", :fillColor => "##{@gradient.gradient(intensity).to_s(16)}" }
+      circles = {:ratio => ratio, :latlng => [lon, lat], :popup => popup ,:radius => @radius, :fillOpacity  => @fillOpacity,:color => color, :fillColor => color }
     end
   else
     parties_partials = VotesTotal.party_totals_per_school(selected)
@@ -88,25 +88,14 @@ def circulos_de_intensidad(selected = {'party_id' => 1})
       lon = school.lon
       ratio = (votes.to_f / total)
       intensity = (ratio - min ) * 100 / votes_range
-      color = @gradient.gradient(intensity).to_s(16)
+      color = "#" + @gradient.gradient(intensity).to_s(16)
       school_name = School.name
       popup = "<b>#{(ratio*100).round(2)}%</b> de este local electoral, <br><b>#{votes}</b> votos de un total de <b>#{total}</b>, <br>#{school.name} ".gsub(/[°()\'\"]/i, '') 
-      circles = {:ratio => ratio, :latlng => [lon, lat], :popup => popup, :radius => @radius, :fillOpacity  => @fillOpacity, :color => "#{@gradient.gradient(intensity).to_s(16)}", :fillColor => "#{@gradient.gradient(intensity).to_s(16)}"}
+      circles = {:ratio => ratio, :latlng => [lon, lat], :popup => popup, :radius => @radius, :fillOpacity  => @fillOpacity, :color => color, :fillColor => color}
     end  
   end
-  { :leaflet => leaflet_without_interpolation, :labels => labels_a({:min => min, :max => max})}
+  { :leaflet => leaflet_without_interpolation, :labels => {:min => min, :max => max} }
 end
-
-# TODO: make it a helper
-def labels_a ( min_max)
-  increment = ((min_max[:max] - min_max[:min] ).to_f / (@legend_samples -1  ) )
-  lab_arr = []
-  @legend_samples.times do |time|
-    lab_arr.push (min_max[:max] - (increment * time))
-  end
-  lab_arr
-end
-
 
 
 # FORK LEAFLET GEM

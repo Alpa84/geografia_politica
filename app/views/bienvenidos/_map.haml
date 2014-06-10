@@ -3,9 +3,5 @@
     :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
     :circles =>  @all_circles[:leaflet])
 .span1
-  - @legend_samples.times do |time|
-    - decimals = 0
-    - decimals = 2 if (@all_circles[:labels].first - @all_circles[:labels].last) < 0.06
-    = (@all_circles[:labels][time] * 100).round(decimals).to_s+"%"
-    %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
+  = labels(@all_circles[:labels])
     

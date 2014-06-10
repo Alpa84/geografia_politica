@@ -1,5 +1,7 @@
 .span10
-  = @all_circles_map
+  = map(:container_id => "map_all",
+    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
+    :circles =>  @all_circles[:leaflet])
 .span1
   - @legend_samples.times do |time|
     - decimals = 0

@@ -16,29 +16,6 @@ ActiveRecord::Schema.define(version: 20140331235640) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "circus", force: true do |t|
-    t.string   "name"
-    t.string   "lat"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "elcircuis", force: true do |t|
-    t.string   "name"
-    t.string   "lat"
-    t.string   "lon"
-    t.string   "alt"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "opinions", force: true do |t|
-    t.text     "mensaje"
-    t.text     "autor"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "political_parties", force: true do |t|
     t.string   "name"
     t.datetime "created_at"

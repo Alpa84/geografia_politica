@@ -52,10 +52,12 @@ gem 'pry'
 
 gem 'pry-plus'
 
-gem 'leaflet-rails'
-
 gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 
 gem 'less-rails'
 
 gem "twitter-bootstrap-rails"
+
+gem 'skrollr-rails'
+
+gem 'leaflet-rails' , :path => "/home/poochi/Rata_Paloma_nuevo/geo/leaflet-rails"

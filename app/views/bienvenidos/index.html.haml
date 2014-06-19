@@ -1,115 +1,92 @@
 
 %h1 Geografía Política 
--#
-  .bgimg
-    %h2 cancheroo
-    %h1 lolooo
+
 .row
   .span11
     %h3 Las preferencias políticas de la ciudad, según las elecciones de 2013
     %p Se puede tener una noción aproximada de las preferencias electorales de los habitantes de cada zona de la ciudad al momento de las últimas elecciones observando los resultados electorales específicos de cada escuela (local electoral).
     = form_tag({controller: "bienvenidos", action: "index"} , remote: true, method: "get", class: "form-group") do
       = label_tag :partido
-      -# =>  @partidos_drop = PoliticalParty.all.order(:name).collect {|p| [ p.name.humanize, p.id ]}
       = select 'partido', 'political_party_id', @partidos_drop , {:selected => 65 }
       = label_tag :cargo
-      = select 'cargo', 'public_office_id', @public_offices_plus_one , {:selected => 2 } 
+      = select 'cargo', 'public_office_id', @public_offices_plus_one , {:selected => 0 } 
       = submit_tag("Mostrar", {class:'btn btn-primary'})
 .row
   %div#mapa_part
     = render 'map'
--#
-    @all_circles_map = Leaflet(:container_id => "map_all",
-    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
-    :circles =>  @all_circles[:leaflet])
-    @fein_circles_map = Leaflet(:container_id => "map_fein",
-    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
-    :circles =>  @fein_circles[:leaflet])
-    @miguel_circles_map = Leaflet(:container_id => "map_mig",
-    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
-    :circles =>  @miguel_circles[:leaflet])
-    @castells_circles_map = Leaflet(:container_id => "map_castells",
-    :center => {:latlng => [-32.94,-60.66],:zoom => 13 },
-    :circles =>  @castells_circles[:leaflet])
-    @pro_map = Leaflet(:container_id => "map_pro",
-    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
-    :circles =>  @pro_circles[:leaflet])
-    @socialismo_circles_map = Leaflet(:container_id => "map_soc",
-    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
-    :circles =>  @socialismo_circles[:leaflet])
-    @k_circles_map = Leaflet(:container_id => "map_k",
-    :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
-    :circles =>  @k_circles[:leaflet])
 
-  .row
-    %h2#type-blockquotes Algunas miradas
-  .row  
-    .span3
-      %h3 Kirchnerismo de barrio
-      %p El frente para la victoria tiene una influencia marcada en los barrios  
-    .span7
-      %h4 Partido: Frente Santa Fe para Todos, Todos los Cargos
-      = @k_circles_map
+.row
+  %h2#type-blockquotes Algunas miradas
+.row  
+  .span3
+    %h3 Kirchnerismo de barrio
+    %p El frente para la victoria tiene una influencia marcada en los barrios  
+  .span7
+    %h4 Partido: Frente Santa Fe para Todos, Todos los Cargos
+    .span5
+      = map(:container_id => "map_k",
+        :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
+        :circles =>  @k_circles[:leaflet])
     .span1
-      - @legend_samples.times do |time|
-        = (@k_circles[:labels][time] * 100 ).round.to_s+"%"
-        %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
-  %br
-  .row  
-    .span3
-      %h3 El centro es del Socialismo
-      %p El socialismo cobra fuerza en la zona céntrica de la ciudad
-    .span7
-      %h4 Partido: Frente Progresista Cívico y Social, Todos los Cargos
-      = @socialismo_circles_map
+      =labels(@k_circles[:labels])
+%br
+.row  
+  .span3
+    %h3 El centro es del Socialismo
+    %p El socialismo cobra fuerza en la zona céntrica de la ciudad
+  .span7
+    %h4 Partido: Frente Progresista Cívico y Social, Todos los Cargos
+    .span5
+      = map(:container_id => "map_soc",
+        :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
+        :circles =>  @socialismo_circles[:leaflet])
     .span1
-      - @legend_samples.times do |time|
-        = (@socialismo_circles[:labels][time] * 100).round.to_s+"%"
-        %p{:class => ["lab#{time.to_s}", 'labels' ] } ● 
-  %br
-    .span3
-      %h3 Huyamos.. hacia la derecha
-      %p La derecha parece ganar fuerza en los barrios y en las zonas suburbanas
-    .span7
-      %h4 Partido: Unión Pro Federal, Todos los Cargos
-      != @pro_map
+      =labels(@socialismo_circles[:labels])
+%br
+  .span3
+    %h3 Huyamos.. hacia la derecha
+    %p La derecha parece ganar fuerza en los barrios y en las zonas suburbanas
+  .span7
+    %h4 Partido: Unión Pro Federal, Todos los Cargos
+    .span5
+      = map(:container_id => "map_pro",
+        :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
+        :circles =>  @pro_circles[:leaflet])
     .span1
-      - @legend_samples.times do |time|
-        = (@pro_circles[:labels][time] * 100 ).round.to_s+"%"
-        %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
-        
+      =labels(@pro_circles[:labels])
+      
 
-  %br
-  .row  
-    .span3
-      %h3 Un caso raro..
-      %p El candidato a gobernador Raul Castells obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela 
-    .span6
-      %h4 Partido: Movimiento Independiente Justicia y Dignidad, Todos los Cargos
-      = @castells_circles_map
+%br
+.row  
+  .span3
+    %h3 Un caso raro..
+    %p El candidato a gobernador Raul Castells obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela 
+  .span7
+    %h4 Partido: Movimiento Independiente Justicia y Dignidad, Todos los Cargos
+    .span5
+      = map(:container_id => "map_castells",
+        :center => {:latlng => [-32.94,-60.66],:zoom => 13 },
+        :circles =>  @castells_circles[:leaflet])
     .span1
-      - @legend_samples.times do |time|
-        = (@castells_circles[:labels][time] * 100).round.to_s+"%"
-        %p{:class => ["lab#{time.to_s}", 'labels' ] } ●
-  %br
+      =labels(@castells_circles[:labels])
+%br
 
 
 
 
 
-  %br
-  %h4 Fundamentación:
-  Cada votante Rosarino es asignado por la Secretaría Electoral Nacional a una escuela cercana al domicilio en el que esta registrado en el padrón (ref). En algunos casos el padrón electoral puede no coincidir con el domicilio real de cada votante, por estar desactualizado o por otras razones, sin embargo creemos que en su mayor parte, los datos del domicilio registrados en el padrón electoral son representativos del domicilio real de los votantes.
-  %br
-  %h4 Metodología:
-  Se sumaron los resultados de las elecciones de 2011 de cada candidato de todas las mesas de cada local electoral. Fuente
-  Se relevó la ubicación geográfica de los 245 locales electorales (Fuente) por medios automatizados  y se revisó cada uno de estos resultados. 
-  %br
-  %h4 Visualización de los resultados:
-  Cada círculo en el mapa está ubicado  de acuerdo al domicilio de cada local electoral en la ciudad. El color de cada círculo representa la proporción de votos que obtuvo cada candidato comparado con el total de votos efectuados en ese local electoral.
-  La referencia de los colores de las columnas va del negro para los resultados más bajos de cada candidato hasta el naranja intenso para sus resultados más altos.
-  Se representan los valores relativos de los resultados (el porcentaje del total) y no a los absolutos, para evitar que los resultados por zona no varíen en función a la cantidad total de votos de cada escuela.
+%br
+%h4 Fundamentación:
+Cada votante Rosarino es asignado por la Secretaría Electoral Nacional a una escuela cercana al domicilio en el que esta registrado en el padrón (ref). En algunos casos el padrón electoral puede no coincidir con el domicilio real de cada votante, por estar desactualizado o por otras razones, sin embargo creemos que en su mayor parte, los datos del domicilio registrados en el padrón electoral son representativos del domicilio real de los votantes.
+%br
+%h4 Metodología:
+Se sumaron los resultados de las elecciones de 2011 de cada candidato de todas las mesas de cada local electoral. Fuente
+Se relevó la ubicación geográfica de los 245 locales electorales (Fuente) por medios automatizados  y se revisó cada uno de estos resultados. 
+%br
+%h4 Visualización de los resultados:
+Cada círculo en el mapa está ubicado  de acuerdo al domicilio de cada local electoral en la ciudad. El color de cada círculo representa la proporción de votos que obtuvo cada candidato comparado con el total de votos efectuados en ese local electoral.
+La referencia de los colores de las columnas va del negro para los resultados más bajos de cada candidato hasta el naranja intenso para sus resultados más altos.
+Se representan los valores relativos de los resultados (el porcentaje del total) y no a los absolutos, para evitar que los resultados por zona no varíen en función a la cantidad total de votos de cada escuela.
 
-  %br
-
+%br
 

@@ -60,4 +60,4 @@ gem "twitter-bootstrap-rails"
 
 gem 'skrollr-rails'
 
-gem 'leaflet-rails' , :path => "/home/poochi/Rata_Paloma_nuevo/geo/leaflet-rails"
+gem 'leaflet-rails', :git => 'https://github.com/Alpa84/leaflet-rails.git'

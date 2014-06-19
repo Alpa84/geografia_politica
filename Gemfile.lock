@@ -5,8 +5,9 @@ GIT
   specs:
     yaml_db (0.2.3)
 
-PATH
-  remote: /home/poochi/Rata_Paloma_nuevo/geo/leaflet-rails
+GIT
+  remote: https://github.com/Alpa84/leaflet-rails.git
+  revision: b1fce4c8fa318881036a3e536102f40d0ea6f72f
   specs:
     leaflet-rails (0.7.3)
 

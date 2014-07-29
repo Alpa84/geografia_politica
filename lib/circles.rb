@@ -5,11 +5,16 @@ class Circles
   @fillOpacity = 1
   @radius = 250
   @gradient = Gradient.new( LOW_COLOR, HIGH__COLOR, SAMPLES)
-  def self.circles_and_labels(selected = {'party_id' => 66}, sorted = false)
-
+  def self.circles_and_labels(selected, sorted = false)
     votes_schools = VotesTotal.votes_per_school(selected)
-    max = votes_schools.map {|votes_school| votes_school.votes / votes_school.school.total.to_f}.max
-    min = votes_schools.map {|votes_school| votes_school.votes / votes_school.school.total.to_f}.min
+    max = votes_schools.map do |votes_school| 
+      votes_school = 0 if votes_school.nil?
+      votes_school.votes / votes_school.school.total.to_f
+    end
+    max = max.max  ######## TODO rename
+    return { :leaflet => nil, :labels => {:min => 0, :max => 0} } if max == 0
+    min = votes_schools.map {|votes_school| votes_school.votes / votes_school.school.total.to_f}
+    min = min.min #### TODO rename
     votes_range = max - min
 
     leaflet = votes_schools.collect do |vote_school|

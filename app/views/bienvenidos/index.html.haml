@@ -5,8 +5,7 @@
   .span11
     %h3 Las preferencias políticas de la ciudad, según las elecciones de 2013
     %p Se puede tener una noción aproximada de las preferencias electorales de los habitantes de cada zona de la ciudad al momento de las últimas elecciones observando los resultados electorales específicos de cada escuela (local electoral).
-    - # = form_tag({controller: "bienvenidos", action: "index"} , remote: true, method: "get", class: "form-group") do
-    = form_tag({controller: "bienvenidos", action: "index"}, method: "get", class: "form-group") do
+    = form_tag({controller: "bienvenidos", action: "index"} , remote: true, method: "get", class: "form-group") do
       = label_tag :political_party_id, 'partido'
       = select 'partido', 'political_party_id', partidos_drop , {:selected => 65 }
       = label_tag :public_office_id, 'cargo'

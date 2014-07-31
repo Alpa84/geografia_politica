@@ -8,10 +8,12 @@ class Circles
   def self.circles_and_labels(selected, sorted = false)
     votes_schools = VotesTotal.votes_per_school(selected)
     max = votes_schools.map do |votes_school| 
-      votes_school = 0 if votes_school.nil?
-      votes_school.votes / votes_school.school.total.to_f
-    end
-    max = max.max  ######## TODO rename
+      if votes_school.nil?
+        votes_school = 0 
+      else
+        votes_school.votes / votes_school.school.total.to_f
+      end
+    end.max
     return { :leaflet => nil, :labels => {:min => 0, :max => 0} } if max == 0
     min = votes_schools.map {|votes_school| votes_school.votes / votes_school.school.total.to_f}
     min = min.min #### TODO rename

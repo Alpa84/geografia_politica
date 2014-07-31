@@ -21,7 +21,7 @@ class BienvenidosController < ApplicationController
   end
 
 end
-
+#something happens when checking a party with no candidate, then checking  default values again, in remote false
 # check unused js and other files
 # check ajax is working
 # if turbolink if doing all the stuff, why the partial?

@@ -1,4 +1,4 @@
-class BienvenidosController < ApplicationController
+class MapsController < ApplicationController
 
   def index
     if params['partido'].blank? 
@@ -26,13 +26,11 @@ end
 # check ajax is working
 # if turbolink if doing all the stuff, why the partial?
 # why does it runs all queries again?  should it be outside the index method?
-# alert is there is no candidate
 
-######### in case that the office doesent apply to the party
-# raname variables for better reading
+# rename variables for better reading
 #rename controller name
 # FORK LEAFLET GEM
 # CHECK OOP Principles
 # GET rid of unused js 
 # MAKE TESTS
-
+# check other issues

@@ -1,4 +1,4 @@
-module BienvenidosHelper
+module MapsHelper
 
   def labels( min_max, labels_divisions = 5)
     increment = ((min_max[:max] - min_max[:min] ).to_f / (labels_divisions - 1 ) )

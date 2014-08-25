@@ -8,13 +8,13 @@ class VotesTotal < ActiveRecord::Base
 
   def self.votes_per_school(selected)
     if selected['public_office_id'] and selected['public_office_id'] != '0'
-      office_per_school(selected)
+      public_office_per_school(selected)
     else
       party_totals_per_school(selected)
     end    
   end
 
-  def self.office_per_school(party_and_office) 
+  def self.public_office_per_school(party_and_office) 
     VotesTotal.includes(:school).where(political_party_id:party_and_office['party_id'], public_office_id:party_and_office['public_office_id']).references(:school)
   end
   

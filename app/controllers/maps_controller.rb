@@ -21,16 +21,15 @@ class MapsController < ApplicationController
   end
 
 end
-#something happens when checking a party with no candidate, then checking  default values again, in remote false
 # check unused js and other files
 # check ajax is working
 # if turbolink if doing all the stuff, why the partial?
 # why does it runs all queries again?  should it be outside the index method?
 
 # rename variables for better reading
-#rename controller name
-# FORK LEAFLET GEM
 # CHECK OOP Principles
 # GET rid of unused js 
 # MAKE TESTS
 # check other issues
+
+# tidy up forked gem?

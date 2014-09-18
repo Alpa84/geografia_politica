@@ -3,3 +3,4 @@ log/*.log
 tmp/**/*
 db/elecciones.sql
 db/data.yml
+log/development.log

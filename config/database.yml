@@ -1,0 +1,18 @@
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: baak_development
+  pool: 5
+  username: poochi
+  password: perro
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: baak_test
+  pool: 5
+  username: poochi
+  password: perro
+
+

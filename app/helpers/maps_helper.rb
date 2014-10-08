@@ -4,7 +4,7 @@ module MapsHelper
     increment = ((min_max[:max] - min_max[:min] ).to_f / (labels_divisions - 1 ) )
     labels_values = labels_divisions.times.collect do |time|
       label_value = (min_max[:max] - (increment * time))
-      (min_max[:max] - min_max[:min]) < 0.06 ? decimals = 2: decimals = 0
+      (min_max[:max] - min_max[:min]) < 0.06 ? decimals = 2 : decimals = 0
       label_percentage = (label_value * 100).round(decimals).to_s
       '<p>' + label_percentage + '%' + '</p>'+ "<p class='lab#{time} labels'> ● "
     end.join('<br>').html_safe
@@ -17,15 +17,26 @@ module MapsHelper
   def partidos_drop
     partidos_list = PoliticalParty.all.order(:name).collect { |party| [ party.name.humanize, party.id ]}
     partidos_list.each do |part|
-      case part[1]
+      
+      part[0] << case part[1]
       when 4
-        part[0] = [part[0], ' (Part. Socialista)'].join
+        ' (Part. Socialista)'
       when 3
-        part[0] = [part[0], ' (Kirchnerismo)'].join
+        ' (Kirchnerismo)'
       when 2
-        part[0] = [part[0], ' (PRO)'].join
+        ' (PRO)'
       end
+
+      
+    
     end
   end
 
+  def pro_circles
+   @pro_circles ||= fix_circles(2)
+  end  
+  
+  def fix_circles(party_id)
+    Circles.circles_and_labels({'party_id' => party_id})
+  end
 end

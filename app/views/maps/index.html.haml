@@ -51,9 +51,9 @@
     .span5
       = map(:container_id => "map_pro",
         :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
-        :circles =>  @pro_circles[:leaflet])
+        :circles =>  pro_circles[:leaflet])
     .span1
-      =labels(@pro_circles[:labels])
+      =labels(pro_circles[:labels])
       
 
 %br

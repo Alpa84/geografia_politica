@@ -1,8 +1,10 @@
 class MapsController < ApplicationController
 
+  DEFAULT_PARTY_ID = 65
   def index
-    if params['partido'].blank? 
-      @party_id = 65
+
+    if params['partido'].blank?
+      @party_id = DEFAULT_PARTY_ID
     else
       @party_id = params['partido']['political_party_id']
       @public_office_id = params['cargo']['public_office_id']
@@ -10,6 +12,7 @@ class MapsController < ApplicationController
     
     @all_circles = Circles.circles_and_labels({'public_office_id' => @public_office_id, 'party_id' => @party_id})
 
+    #mover a la vista(es siempre igual sin importar los parametros)
     @pro_circles = Circles.circles_and_labels({'party_id' => 2})
 
     @socialismo_circles = Circles.circles_and_labels({'party_id' => 4})

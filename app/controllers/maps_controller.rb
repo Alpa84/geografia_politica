@@ -10,16 +10,7 @@ class MapsController < ApplicationController
       @public_office_id = params['cargo']['public_office_id']
     end
     
-    @all_circles = Circles.circles_and_labels({'public_office_id' => @public_office_id, 'party_id' => @party_id})
-
-    #mover a la vista(es siempre igual sin importar los parametros)
-    @pro_circles = Circles.circles_and_labels({'party_id' => 2})
-
-    @socialismo_circles = Circles.circles_and_labels({'party_id' => 4})
-
-    @k_circles = Circles.circles_and_labels({'party_id' => 3})
-
-    @castells_circles = Circles.circles_and_labels({'public_office_id' => 1, 'party_id' => 5}, true)
+    @requested_circles = CircleGroup.new({'public_office_id' => @public_office_id, 'party_id' => @party_id})
 
   end
 

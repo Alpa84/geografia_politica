@@ -15,15 +15,5 @@ class MapsController < ApplicationController
   end
 
 end
-# check unused js and other files
-# check ajax is working
-# if turbolink if doing all the stuff, why the partial?
-# why does it runs all queries again?  should it be outside the index method?
 
-# rename variables for better reading
-# CHECK OOP Principles
-# GET rid of unused js 
 # MAKE TESTS
-# check other issues
-
-# tidy up forked gem?

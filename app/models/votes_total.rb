@@ -3,7 +3,6 @@ class VotesTotal < ActiveRecord::Base
   belongs_to :political_party
   belongs_to :public_office
 
-  #code smell like shit
   @public_offices_number ||= PublicOffice.count
   @schools ||= School.all
 

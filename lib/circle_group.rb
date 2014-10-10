@@ -1,6 +1,5 @@
-#add comment, que hace la clase
+#Prepares votes of each school to work with #create_leaflet_hash in maps_helper
 
-#trasformar a objecto instanciable
 class CircleGroup
 
   attr_reader :votes_schools, :max, :min , :sorted

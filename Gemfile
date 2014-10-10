@@ -58,6 +58,4 @@ gem 'less-rails'
 
 gem "twitter-bootstrap-rails"
 
-gem 'skrollr-rails'
-
 gem 'leaflet-rails', :git => 'https://github.com/Alpa84/leaflet-rails.git'

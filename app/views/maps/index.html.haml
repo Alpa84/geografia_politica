@@ -23,39 +23,42 @@
     %p El frente para la victoria tiene una influencia marcada en los barrios  
   .span7
     %h4 Partido: Frente Santa Fe para Todos, Todos los Cargos
+    - @k_circles = CircleGroup.new( {'party_id' => 3})
     .span5
       = map(:container_id => "map_k",
         :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
-        :circles =>  @k_circles[:leaflet])
+        :circles =>  create_leaflet_hash(@k_circles))
     .span1
-      =labels(@k_circles[:labels])
+      =labels(@k_circles)
 %br
+
 .row  
   .span3
     %h3 El centro es del Socialismo
     %p El socialismo cobra fuerza en la zona céntrica de la ciudad
   .span7
     %h4 Partido: Frente Progresista Cívico y Social, Todos los Cargos
+    - @socialismo_circles = CircleGroup.new({'party_id' => 4})
     .span5
       = map(:container_id => "map_soc",
         :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
-        :circles =>  @socialismo_circles[:leaflet])
+        :circles => create_leaflet_hash(@socialismo_circles))
     .span1
-      =labels(@socialismo_circles[:labels])
+      =labels(@socialismo_circles)
 %br
   .span3
     %h3 Huyamos.. hacia la derecha
     %p La derecha parece ganar fuerza en los barrios y en las zonas suburbanas
   .span7
     %h4 Partido: Unión Pro Federal, Todos los Cargos
+    - @pro_circles = CircleGroup.new({'party_id' => 2})
     .span5
       = map(:container_id => "map_pro",
         :center => {:latlng => [-32.954088, -60.664458],:zoom => 12 },
-        :circles =>  @pro_circles[:leaflet])
+        :circles => create_leaflet_hash(@pro_circles))
     .span1
-      =labels(@pro_circles[:labels])
+      =labels(@pro_circles)
       
-
 %br
 .row  
   .span3
@@ -63,17 +66,14 @@
     %p El candidato a gobernador Raul Castells obtuvo un resultado muy destacado en un sólo local electoral. Esta diferencia favorable proviene cási exclusivamente de una sola mesa de las 7 de la escuela 
   .span7
     %h4 Partido: Movimiento Independiente Justicia y Dignidad, Todos los Cargos
+    - @castells_circles = CircleGroup.new({'public_office_id' => 1, 'party_id' => 5}, true)
     .span5
       = map(:container_id => "map_castells",
         :center => {:latlng => [-32.94,-60.66],:zoom => 13 },
-        :circles =>  @castells_circles[:leaflet])
+        :circles => create_leaflet_hash(@castells_circles))
     .span1
-      =labels(@castells_circles[:labels])
+      =labels(@castells_circles)
 %br
-
-
-
-
 
 %br
 %h4 Fundamentación:

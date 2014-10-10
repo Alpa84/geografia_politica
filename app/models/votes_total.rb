@@ -7,7 +7,7 @@ class VotesTotal < ActiveRecord::Base
   @schools ||= School.all
 
   def self.votes_per_school(selected)
-    if selected['public_office_id'] and selected['public_office_id'] != '0'
+    if selected['public_office_id'].present? && selected['public_office_id'] != '0'
       public_office_per_school(selected)
     else
       party_totals_per_school(selected)

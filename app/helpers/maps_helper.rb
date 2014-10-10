@@ -35,6 +35,7 @@ module MapsHelper
     end
   end
 
+
   def create_leaflet_hash(circle)
     
     votes_schools = circle.votes_schools

@@ -3,9 +3,6 @@ class VotesTotal < ActiveRecord::Base
   belongs_to :political_party
   belongs_to :public_office
 
-  @public_offices_number ||= PublicOffice.count
-  @schools ||= School.all
-
   def self.votes_per_school(selected)
     if selected['public_office_id'].present? && selected['public_office_id'] != '0'
       public_office_per_school(selected)
@@ -20,10 +17,9 @@ class VotesTotal < ActiveRecord::Base
   
   def self.party_totals_per_school(party)
     school_partials = VotesTotal.includes(:school).where(political_party_id:party['party_id']).references(:school).group(:school_id).sum(:votes)
-    
-    @schools.collect do |school|
+    School.all.collect do |school|
       votes = school_partials[school.id]
-      total = school.total * @public_offices_number
+      total = school.total * PublicOffice.count
       OpenStruct.new(votes: votes, school: OpenStruct.new( total: total , lat: school.lat, lon: school.lon, name: school.name))
     end
   end

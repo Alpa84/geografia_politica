@@ -1,17 +1,17 @@
 module MapsHelper
   LOW_COLOR  = 0x000000 
-  HIGH__COLOR = 0xFF7700
+  HIGH_COLOR = 0xFF7700
   SAMPLES = 100
   FILL_OPACITY = 1
   RADIUS = 250
   PERCENTAGE = 100
-  GRADIENT = Gradient.new( LOW_COLOR, HIGH__COLOR, SAMPLES)
+  GRADIENT = Gradient.new( LOW_COLOR, HIGH_COLOR, SAMPLES)
 
-  def labels( circle, labels_divisions = 5)
-    increment = ((circle.max - circle.min ).to_f / (labels_divisions - 1 ) )
+  def labels( circle_group, labels_divisions = 5)
+    increment = ((circle_group.max - circle_group.min ).to_f / (labels_divisions - 1 ) )
     labels_values = labels_divisions.times.collect do |time|
-      label_value = (circle.max - (increment * time))
-      (circle.max - circle.min) < 0.06 ? decimals = 2 : decimals = 0
+      label_value = (circle_group.max - (increment * time))
+      (circle_group.max - circle_group.min) < 0.06 ? decimals = 2 : decimals = 0
       label_percentage = (label_value * 100).round(decimals).to_s
       '<p>' + label_percentage + '%' + '</p>'+ "<p class='lab#{time} labels'> ● "
     end.join('<br>').html_safe

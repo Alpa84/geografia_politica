@@ -8,7 +8,6 @@ class CircleGroup
     
     @sorted = sorted    
     @votes_schools = VotesTotal.votes_per_school(selected)
-    
     @max = votes_schools.map do |votes_school| 
       votes_school.nil? ? 0 : votes_school.votes / votes_school.school.total.to_f
     end.max

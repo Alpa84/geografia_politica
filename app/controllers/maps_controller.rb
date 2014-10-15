@@ -2,7 +2,6 @@ class MapsController < ApplicationController
 
   DEFAULT_PARTY_ID = 65
   def index
-
     if params['partido'].blank?
       @party_id = DEFAULT_PARTY_ID
     else

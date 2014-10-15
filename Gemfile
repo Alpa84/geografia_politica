@@ -59,3 +59,9 @@ gem 'less-rails'
 gem "twitter-bootstrap-rails"
 
 gem 'leaflet-rails', :git => 'https://github.com/Alpa84/leaflet-rails.git'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0'
+end
+
+gem 'capybara'

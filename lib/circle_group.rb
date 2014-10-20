@@ -5,7 +5,6 @@ class CircleGroup
   attr_reader :votes_schools, :max, :min , :sorted
   
   def initialize(selected, sorted = false)
-    
     @sorted = sorted    
     @votes_schools = VotesTotal.votes_per_school(selected)
     @max = votes_schools.map do |votes_school| 

@@ -13,19 +13,19 @@ class Gradient
     @B1 = (stop & 0x0000ff) >> 0;
   end
 
-  def gradient(step)
-    r = interpolate(@R0, @R1, step);
-    g = interpolate(@G0, @G1, step);
-    b = interpolate(@B0, @B1, step);
+  def gradient(step_interval)
+    r = interpolate(@R0, @R1, step_interval);
+    g = interpolate(@G0, @G1, step_interval);
+    b = interpolate(@B0, @B1, step_interval);
 
     (((r << 8) | g) << 8) | b;
   end
 
-  def interpolate(start, stop, step)
+  def interpolate(start, stop, step_interval)
     if (start < stop)
-      return (((stop - start) * (step / @resolution)) + start).round;
+      return (((stop - start) * (step_interval / @resolution)) + start).round;
     else
-      return (((start - stop) * (1 - (step / @resolution))) + stop).round;
+      return (((start - stop) * (1 - (step_interval / @resolution))) + stop).round;
     end
   end
 end

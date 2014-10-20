@@ -9,7 +9,7 @@ module MapsHelper
 
   def labels( circle_group, labels_divisions = 5)
     increment = ((circle_group.max - circle_group.min ).to_f / (labels_divisions - 1 ) )
-    labels_values = labels_divisions.times.collect do |time|
+    labels_divisions.times.collect do |time|
       label_value = (circle_group.max - (increment * time))
       (circle_group.max - circle_group.min) < 0.06 ? decimals = 2 : decimals = 0
       label_percentage = (label_value * 100).round(decimals).to_s
@@ -39,8 +39,8 @@ module MapsHelper
     
     votes_schools = circle.votes_schools
     return nil if circle.max == 0
-
     votes_range = circle.max - circle.min
+    votes_range = 1 if votes_range == 0
 
     leaflet = votes_schools.collect do |vote_school|
       votes = vote_school.votes
@@ -52,7 +52,7 @@ module MapsHelper
       color = "#" + GRADIENT.gradient(intensity).to_s(16)
       school_name = vote_school.school.name
       popup = "<b>#{(ratio*100).round(2)}%</b> de este local electoral, <br><b>#{votes}</b> votos de un total de <b>#{total}</b>, <br>#{school_name} ".gsub(/[°()\'\"]/i, '') 
-      circles = {:ratio => ratio, :latlng => [lon, lat], :popup => popup ,:radius => RADIUS, :fillOpacity  => FILL_OPACITY,:color => color, :fillColor => color } 
+      {:ratio => ratio, :latlng => [lon, lat], :popup => popup ,:radius => RADIUS, :fillOpacity  => FILL_OPACITY,:color => color, :fillColor => color } 
     end
     
     circle.sorted ? leaflet.sort_by { |circle| circle[:ratio]} : leaflet

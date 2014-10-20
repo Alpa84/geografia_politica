@@ -62,6 +62,7 @@ gem 'leaflet-rails', :git => 'https://github.com/Alpa84/leaflet-rails.git'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
+  gem 'database_cleaner'
 end
 
 gem 'capybara'

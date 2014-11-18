@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Baak::Application.config.secret_key_base = '8697773ac4d69061c72b8cfd504cabc647dfa97be05c046ec5e9dd0c48eac059bf640483db4cbee388779a296a3dc3c6fd1adb9d19e029191a25eb3139498399'
+Baak::Application.config.secret_key_base = ENV['MYAPP_SECRET_TOKEN']
